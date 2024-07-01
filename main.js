@@ -2,7 +2,7 @@ async function getLocation(location){
     var url = await fetch(`https://api.weatherapi.com/v1/search.json?key=2d28e8ff822e437f93b131622242506&q=${location}`)
     var data = await url.json();
     if(data[0]!='' && data[0]!=null){
-        getCountry(location,data[0].id);
+        getCountry(location);
     }
 }
 getLocation("cairo");
@@ -20,7 +20,7 @@ search.addEventListener('input',function(e){
 var wearherList=[]
 var wearherLocation=[]
 async function getCountry(country,id){
-    var url = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=2d28e8ff822e437f93b131622242506&q=${country}&days=${id}`)
+    var url = await fetch(`https://api.weatherapi.com/v1/forecast.json?key=2d28e8ff822e437f93b131622242506&q=${country}&days=3`)
     var data = await url.json();
     wearherList = (data.forecast.forecastday);
     wearherLocation =data.location
@@ -60,7 +60,7 @@ function display(){
 
     var displayDay2
     displayDay2 = `<div class="card-header text-center">
-                        <p class="mb-0">${weekday[d.getDay()+2]}</p>
+                        <p class="mb-0">${weekday[(d.getDay()+2)%7]}</p>
                     </div>
                     <div class="card-body p-5 text-center">
                         <img src="http:${wearherList[1].day.condition.icon}" alt="">
@@ -78,7 +78,7 @@ function display(){
 
     var displayDay3
     displayDay3 = `<div class="card-header text-center">
-                        <p class="mb-0">${weekday[d.getDay()+3]}</p>
+                        <p class="mb-0">${weekday[(d.getDay()+3)%7]}</p>
                     </div>
                     <div class="card-body p-5 text-center">
                         <img src="http:${wearherList[2].day.condition.icon}" alt="">
